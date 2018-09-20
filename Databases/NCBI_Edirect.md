@@ -199,6 +199,29 @@ xtract -pattern DocumentSummary -element FtpPath_RefSeq | \
 awk -F"/" '{print "curl -o "$NF"_genomic.fna.gz " $0"/"$NF"_genomic.fna.gz"}'
 ```
 
+## Downloading databases
+If you are working with often complex metagenomic data you will eventually have to make sense of that data in a taxonomic and/or functional context. Therefore knowing how to access large amounts of reference databases quickly and efficiently is a must. Below are some examples of how you can accomplish this.
+
+1. [Downloading the NCBI Virus RefSeq Project Database](https://www.ncbi.nlm.nih.gov/bioproject/485481)
+
+```
+esearch -db bioproject -query "PRJNA485481" | elink -target nuccore | efetch -format fasta  > virus.fna
+```
+
+If you click on the NCBI virus link above you will see that accession number will be the query name you use to download the viral database which in this case is ‘PRJNA485481’. 
+
+You could also download this same database using the database id:
+```
+esearch -db bioproject -query "485481[id]" | elink -target nuccore | efetch -format fasta
+```
+
+Also note that I wanted to get the nucleotide database so my link target is *nuccore* but you can easily change that to *protein* if that is your desired database like the example below. 
+
+2. [Downloading NCBI  antibiotic resistant gene protein database](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA313047)
+```
+esearch -db bioproject -query "PRJNA313047" | elink -target protein | efetch -format fasta > ncbi_antibiotic_database.faa
+```
 
 
+ 
 
